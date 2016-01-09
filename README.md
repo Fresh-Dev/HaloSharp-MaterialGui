@@ -26,12 +26,19 @@ Example C# WinForm GUI Project for Halo5 Statistic-Monitoring, using **[github.c
 
 ##Usage
 **Used VS:** Visual Studio 2015
+
 **Used .Net:** .Net Framework 4.6.1
+
 1. Get an [developer.haloapi.com](https://developer.haloapi.com) API-Key
+
 2. Go into Solution "HaloSharp-MaterialGui"
+
 3. Open Common.cs as Code. (Mark Entry at Solution-Expl. and press F7)
+
 4. Insert API-Key at ``private const string Apikey = "";``
+
 5. Insert Gamertag to monitor at ``private const string Gamertag = "";``
+
 6. Build Project and gimme feedback ;)
 
 ##Screen
