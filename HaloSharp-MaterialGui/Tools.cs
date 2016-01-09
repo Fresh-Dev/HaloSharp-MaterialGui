@@ -11,11 +11,11 @@ using HaloSharp.Model.Metadata;
 using HaloSharp.Model.Stats.Common;
 
 namespace MaterialHaloSharp
-{
+{    
     /// <summary>
     /// Class Tools.
     /// </summary>
-    internal class Tools
+    internal class Tools 
     {
         /// <summary>
         /// Scales an image.
