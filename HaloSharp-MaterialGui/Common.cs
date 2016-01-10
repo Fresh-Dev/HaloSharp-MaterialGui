@@ -210,13 +210,31 @@ namespace MaterialHaloSharp
         /// <returns>System.Double.</returns>
         public double SpartanRankGetPercentage(int currentSpartanXp)
         {
+            int currentSpartanRank=0;
             int[] nextSpartanRank = { 0 };
-            foreach (var sr in SpartanRanks.Where(sr => sr.StartXp > currentSpartanXp && nextSpartanRank[0] == 0)) { nextSpartanRank[0] = sr.Id; }
+            foreach (var sr in SpartanRanks.Where(
+                            sr => sr.StartXp > currentSpartanXp &&
+                            nextSpartanRank[0] == 0)
+                    )
+            {
+                nextSpartanRank[0] = sr.Id;
+                currentSpartanRank = sr.Id;
+            }
+            
+
             var lastTargetXp = SpartanRanks[nextSpartanRank[0] - 1].StartXp;
             var targetXp = SpartanRanks[nextSpartanRank[0]].StartXp;
             var levelProgressTargetXp = targetXp - lastTargetXp;
             var levelProgressXp = lastTargetXp - currentSpartanXp;
-            var percentage = 100 - 100 * (double.Parse(levelProgressXp.ToString()) / double.Parse(levelProgressTargetXp.ToString()));
+
+            
+
+            string output = "Current Rank: "+currentSpartanRank+"\n\tCurrentXP:\t"+currentSpartanXp+"\n\tLvL-Target-XP:\t"+lastTargetXp+"\n\t";
+
+            MessageBox.Show(output);
+
+            double percentage = double.Parse(lastTargetXp.ToString()) / double.Parse(levelProgressXp.ToString());
+
             return percentage;
         }
         

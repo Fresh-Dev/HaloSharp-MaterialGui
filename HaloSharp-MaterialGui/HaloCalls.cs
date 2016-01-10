@@ -54,6 +54,7 @@ namespace MaterialHaloSharp
             using (var session = client.StartSession())
             {
                 SpartanRanks = await session.Query(new GetSpartanRanks());
+                
                 Maps = await session.Query(new GetMaps());
                 Medals = await session.Query(new GetMedals());
                 Weapons = await session.Query(new GetWeapons());
@@ -188,7 +189,11 @@ namespace MaterialHaloSharp
                 UiUpdateLabel("Total Shots Fired: \t" + totalShotsFired.ToString("#,###"), l_totalShotsFired);
                 UiUpdateLabel("Total Shots Landed: \t" + totalShotsLanded.ToString("#,###"), l_totalShotsLanded);
                 UiUpdateLabel("Shot Accuracy: \t" + playersTotalAccuracy.ToString("0.00") + " %", l_totalShotsAccuracy);
-                
+                Invoke((MethodInvoker)delegate {
+                    circularProgressBar1.Caption = Resources.prefixSrWithSpace + "\n" + percentSpartanRankCurrent.ToString("0.00") + " %";
+                    circularProgressBar1.Value = Convert.ToInt32(percentSpartanRankCurrent);
+                });
+
 
                 var bitmap2 = Tools.BitmapFromUrl(Tools.GetMedalFromMedalList(Medals, TopMedals[0].MedalId).SpriteLocation.SpriteSheetUri);
                 for (var max = 0; max < 10; max++)
@@ -199,7 +204,7 @@ namespace MaterialHaloSharp
                     Invoke((MethodInvoker)delegate { TopMedalPicBoxes[max].Image = Tools.ScaleImage(cloneBitmap, 64, 64); });
                     UiUpdateLabel(Medals.First(item => item.Id == TopMedals[max].MedalId).Name + "\n[ " + TopMedals[max].Count.ToString("#,###") + " ]", TopMedalLabels[max]);
                 }
-                Invoke((MethodInvoker)delegate { circularProgressBar1.Caption = Resources.prefixSrWithSpace + "\n" + percentSpartanRankCurrent.ToString("0.00") + " %"; circularProgressBar1.Value = Convert.ToInt32(percentSpartanRankCurrent); });
+                
                 
             }
             UpdateWarzone();
