@@ -39,7 +39,7 @@ namespace MaterialHaloSharp
     /// </summary>
     public partial class Mainform
     {
-        //Main-Querys
+        //Main-Querys (Define them Public, and update them at first Api-Call (may after GetMetadata if u want) and Update them on every global value update. If u update them to often / to fast, you'll get API-Limit exeed error)
         public HaloSharp.Model.Stats.Lifetime.CustomServiceRecord customServiceRecord;
         public HaloSharp.Model.Stats.Lifetime.WarzoneServiceRecord warzoneServiceRecord;
         public HaloSharp.Model.Stats.Lifetime.ArenaServiceRecord arenaServiceRecord;
@@ -55,11 +55,12 @@ namespace MaterialHaloSharp
             {
                 SpartanRanks = await session.Query(new GetSpartanRanks());
                 Maps = await session.Query(new GetMaps());
-                Commendations = await session.Query(new GetCommendations());
                 Medals = await session.Query(new GetMedals());
+                Weapons = await session.Query(new GetWeapons());
             }
 
             MetaDataLoaded = true;
+            //Call the next API-Set Call
             UpdateOverview();
         }
 
@@ -174,16 +175,16 @@ namespace MaterialHaloSharp
                 UiUpdateLabel(Resources.prefixSrWithSpace + currentSpartanRank, l_rank_);
                 UiUpdateLabel(Gamertag, l_gamertag_, Color.White);
                 UiUpdateLabel(Resources.prefixTotalTimePlayedWithNewline + totalPlayTimeString, l_time_played);
-                UiUpdateLabel("Kills: \t" + totalKills, l_totalKills);
-                UiUpdateLabel("Deaths: \t" + totalDeath, l_totalDeaths);
-                UiUpdateLabel("Assists: \t" + totalAssists, l_totalAssists);
+                UiUpdateLabel("Kills: \t" + totalKills.ToString("#,###"), l_totalKills);
+                UiUpdateLabel("Deaths: \t" + totalDeath.ToString("#,###"), l_totalDeaths);
+                UiUpdateLabel("Assists: \t" + totalAssists.ToString("#,###"), l_totalAssists);
                 UiUpdateLabel("K/D: \t" + totalKillsDeath.ToString("0.00"), l_killsDeath);
                 UiUpdateLabel("K+A/D: \t" + totalKillsWithAssistsDeath.ToString("0.00"), l_killsAssistsDeath);
-                UiUpdateLabel("Headshots: \t" + totalHeadshots, l_headshots);
-                UiUpdateLabel("Assassinations: \t" + totalAssassinations, l_assassinations);
-                UiUpdateLabel("Total Match-Count: \t" + totalGames, l_totalMatchesCount);
-                UiUpdateLabel("Total Matches Won: \t" + totalWon, l_totalMatchesWon, Color.DarkGreen);
-                UiUpdateLabel("Total Matches Lost: \t" + totalLost, l_totalMatchesLost, Color.Red);
+                UiUpdateLabel("Headshots: \t" + totalHeadshots.ToString("#,###"), l_headshots);
+                UiUpdateLabel("Assassinations: \t" + totalAssassinations.ToString("#,###"), l_assassinations);
+                UiUpdateLabel("Total Match-Count: \t" + totalGames.ToString("#,###"), l_totalMatchesCount);
+                UiUpdateLabel("Total Matches Won: \t" + totalWon.ToString("#,###"), l_totalMatchesWon, Color.DarkGreen);
+                UiUpdateLabel("Total Matches Lost: \t" + totalLost.ToString("#,###"), l_totalMatchesLost, Color.Red);
                 UiUpdateLabel("Total Shots Fired: \t" + totalShotsFired.ToString("#,###"), l_totalShotsFired);
                 UiUpdateLabel("Total Shots Landed: \t" + totalShotsLanded.ToString("#,###"), l_totalShotsLanded);
                 UiUpdateLabel("Shot Accuracy: \t" + playersTotalAccuracy.ToString("0.00") + " %", l_totalShotsAccuracy);
@@ -196,7 +197,7 @@ namespace MaterialHaloSharp
                     var cloneRect = Tools.MedalSpriteRectangle(medalx);
                     var cloneBitmap = Tools.GetSpriteFromImage(bitmap2, cloneRect);
                     Invoke((MethodInvoker)delegate { TopMedalPicBoxes[max].Image = Tools.ScaleImage(cloneBitmap, 64, 64); });
-                    UiUpdateLabel(Medals.First(item => item.Id == TopMedals[max].MedalId).Name + "\n[ " + TopMedals[max].Count + " ]", TopMedalLabels[max]);
+                    UiUpdateLabel(Medals.First(item => item.Id == TopMedals[max].MedalId).Name + "\n[ " + TopMedals[max].Count.ToString("#,###") + " ]", TopMedalLabels[max]);
                 }
                 Invoke((MethodInvoker)delegate { circularProgressBar1.Caption = Resources.prefixSrWithSpace + "\n" + percentSpartanRankCurrent.ToString("0.00") + " %"; circularProgressBar1.Value = Convert.ToInt32(percentSpartanRankCurrent); });
                 
@@ -256,15 +257,39 @@ namespace MaterialHaloSharp
 
                 TopMedals = warzoneServiceRecord.Results[0].Result.WarzoneStat.MedalAwards;
                 TopMedals = TopMedals.OrderByDescending(o => o.Count).ToList();
-                var bitmap2 = Tools.BitmapFromUrl(Tools.GetMedalFromMedalList(Medals, TopMedals[0].MedalId).SpriteLocation.SpriteSheetUri);
+
+                WarzoneTopWeapons = warzoneServiceRecord.Results[0].Result.WarzoneStat.WeaponStats;
+                WarzoneTopWeapons = WarzoneTopWeapons.OrderByDescending(o => o.TotalKills).ToList();
+
+                var MedalsSpriteImage = Tools.BitmapFromUrl(Tools.GetMedalFromMedalList(Medals, TopMedals[0].MedalId).SpriteLocation.SpriteSheetUri);
+
+                
+                
+
+                
+                
 
                 for (var max = 0; max < 5; max++)
                 {
+                    //Medal-Stuff
                     var medalx = Tools.GetMedalFromMedalList(Medals, TopMedals[max].MedalId);
                     var cloneRect = Tools.MedalSpriteRectangle(medalx);
-                    var cloneBitmap = Tools.GetSpriteFromImage(bitmap2, cloneRect);
+                    var cloneBitmap = Tools.GetSpriteFromImage(MedalsSpriteImage, cloneRect);
                     Invoke((MethodInvoker)delegate { WarzoneTopMedalPicBoxes[max].Image = Tools.ScaleImage(cloneBitmap, 64, 64); });
-                    UiUpdateLabel(Medals.First(item => item.Id == TopMedals[max].MedalId).Name + "\n[ " + TopMedals[max].Count + " ]", WarzoneTopMedalLabels[max]);
+                    UiUpdateLabel(Medals.First(item => item.Id == TopMedals[max].MedalId).Name + "\n[ " + TopMedals[max].Count.ToString("#,###") + " ]", WarzoneTopMedalLabels[max]);
+                    
+                    //Weapon-Stuff
+                    var WeaponImage = Tools.BitmapFromUrl(Tools.GetWeaponFromWeaponList(Weapons, WarzoneTopWeapons[max].WeaponId.StockId).SmallIconImageUrl);
+                    var WeaponName = Tools.GetWeaponFromWeaponList(Weapons, WarzoneTopWeapons[max].WeaponId.StockId).Name;
+                    var WeaponKills = WarzoneTopWeapons[max].TotalKills;
+
+                    Invoke((MethodInvoker) delegate
+                    {
+                        WarzoneTopWeaponsPicBoxes[max].Image = Tools.ScaleImage(WeaponImage, 64, 64);
+                    });
+                    UiUpdateLabel(WeaponName + "\n[ " + WeaponKills.ToString("#,###") + " ]", WarzoneTopWeaponsLabels[max]);
+
+
                 }
                 
             }

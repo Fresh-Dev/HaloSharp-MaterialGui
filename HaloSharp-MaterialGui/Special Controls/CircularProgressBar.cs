@@ -625,6 +625,7 @@ namespace MaterialHaloSharp.Special_Controls
                 PointF point = AddPoint(Point.Empty, 2);
                 SizeF size = AddSize(this.Size, -2 * 2);
                 Brush backBrush = new SolidBrush(this.BackColor);
+
                 if (this.OuterCircleColor != Color.Empty && this.OuterCircleColor != Color.Transparent
                     && this.OuterCircleWidth > 0)
                 {
@@ -637,11 +638,12 @@ namespace MaterialHaloSharp.Special_Controls
                 point = AddPoint(point, this.OuterCircleMargin);
                 size = AddSize(size, -2 * this.OuterCircleMargin);
 
+                //Draw a total progress bg
                 g.FillPie(
                     new SolidBrush(Color.FromArgb(150,30,30,30)),
                     ToRectangle(new RectangleF(point, size)),
                     this.ProgressCircleStartAngle,
-                    (this.aniValue / (this.MaxValue - this.MinValue)));
+                    (this.aniValue / (this.MaxValue)));
 
                 g.FillPie(
                     new SolidBrush(this.ProgressCircleColor), 

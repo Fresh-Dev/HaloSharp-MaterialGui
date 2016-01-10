@@ -55,7 +55,7 @@ namespace MaterialHaloSharp
             this.pb_medal3 = new System.Windows.Forms.PictureBox();
             this.pb_medal2 = new System.Windows.Forms.PictureBox();
             this.pb_medal1 = new System.Windows.Forms.PictureBox();
-            this.l_h_medals = new System.Windows.Forms.Label();
+            this.l_h_medals = new MaterialHaloSharp.Special_Controls.fxLabel();
             this.l_totalShotsAccuracy = new System.Windows.Forms.Label();
             this.l_totalShotsLanded = new System.Windows.Forms.Label();
             this.l_totalShotsFired = new System.Windows.Forms.Label();
@@ -75,10 +75,10 @@ namespace MaterialHaloSharp
             this.l_gamertag_ = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.circularProgressBar1 = new CircularProgressBar();
+            this.circularProgressBar1 = new MaterialHaloSharp.Special_Controls.CircularProgressBar();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.fxLabel2 = new fxLabel();
-            this.fxLabel1 = new fxLabel();
+            this.fxLabel2 = new MaterialHaloSharp.Special_Controls.fxLabel();
+            this.fxLabel1 = new MaterialHaloSharp.Special_Controls.fxLabel();
             this.l_warzoneTopWeapons_5 = new System.Windows.Forms.Label();
             this.l_warzoneTopWeapons_4 = new System.Windows.Forms.Label();
             this.l_warzoneTopWeapons_3 = new System.Windows.Forms.Label();
@@ -218,7 +218,7 @@ namespace MaterialHaloSharp
             // 
             this.l_med_10.Font = new System.Drawing.Font("Roboto", 8F);
             this.l_med_10.ForeColor = System.Drawing.Color.Gray;
-            this.l_med_10.Location = new System.Drawing.Point(905, 361);
+            this.l_med_10.Location = new System.Drawing.Point(905, 391);
             this.l_med_10.Name = "l_med_10";
             this.l_med_10.Size = new System.Drawing.Size(64, 90);
             this.l_med_10.TabIndex = 51;
@@ -230,7 +230,7 @@ namespace MaterialHaloSharp
             // 
             this.l_med_9.Font = new System.Drawing.Font("Roboto", 8F);
             this.l_med_9.ForeColor = System.Drawing.Color.Gray;
-            this.l_med_9.Location = new System.Drawing.Point(835, 361);
+            this.l_med_9.Location = new System.Drawing.Point(835, 391);
             this.l_med_9.Name = "l_med_9";
             this.l_med_9.Size = new System.Drawing.Size(64, 90);
             this.l_med_9.TabIndex = 50;
@@ -242,7 +242,7 @@ namespace MaterialHaloSharp
             // 
             this.l_med_8.Font = new System.Drawing.Font("Roboto", 8F);
             this.l_med_8.ForeColor = System.Drawing.Color.Gray;
-            this.l_med_8.Location = new System.Drawing.Point(765, 361);
+            this.l_med_8.Location = new System.Drawing.Point(765, 391);
             this.l_med_8.Name = "l_med_8";
             this.l_med_8.Size = new System.Drawing.Size(64, 90);
             this.l_med_8.TabIndex = 49;
@@ -254,7 +254,7 @@ namespace MaterialHaloSharp
             // 
             this.l_med_7.Font = new System.Drawing.Font("Roboto", 8F);
             this.l_med_7.ForeColor = System.Drawing.Color.Gray;
-            this.l_med_7.Location = new System.Drawing.Point(695, 361);
+            this.l_med_7.Location = new System.Drawing.Point(695, 391);
             this.l_med_7.Name = "l_med_7";
             this.l_med_7.Size = new System.Drawing.Size(64, 90);
             this.l_med_7.TabIndex = 48;
@@ -266,7 +266,7 @@ namespace MaterialHaloSharp
             // 
             this.l_med_6.Font = new System.Drawing.Font("Roboto", 8F);
             this.l_med_6.ForeColor = System.Drawing.Color.Gray;
-            this.l_med_6.Location = new System.Drawing.Point(625, 361);
+            this.l_med_6.Location = new System.Drawing.Point(625, 391);
             this.l_med_6.Name = "l_med_6";
             this.l_med_6.Size = new System.Drawing.Size(64, 90);
             this.l_med_6.TabIndex = 47;
@@ -278,7 +278,7 @@ namespace MaterialHaloSharp
             // 
             this.l_med_5.Font = new System.Drawing.Font("Roboto", 8F);
             this.l_med_5.ForeColor = System.Drawing.Color.Gray;
-            this.l_med_5.Location = new System.Drawing.Point(555, 361);
+            this.l_med_5.Location = new System.Drawing.Point(555, 391);
             this.l_med_5.Name = "l_med_5";
             this.l_med_5.Size = new System.Drawing.Size(64, 90);
             this.l_med_5.TabIndex = 46;
@@ -290,7 +290,7 @@ namespace MaterialHaloSharp
             // 
             this.l_med_4.Font = new System.Drawing.Font("Roboto", 8F);
             this.l_med_4.ForeColor = System.Drawing.Color.Gray;
-            this.l_med_4.Location = new System.Drawing.Point(485, 361);
+            this.l_med_4.Location = new System.Drawing.Point(485, 391);
             this.l_med_4.Name = "l_med_4";
             this.l_med_4.Size = new System.Drawing.Size(64, 90);
             this.l_med_4.TabIndex = 45;
@@ -302,7 +302,7 @@ namespace MaterialHaloSharp
             // 
             this.l_med_3.Font = new System.Drawing.Font("Roboto", 8F);
             this.l_med_3.ForeColor = System.Drawing.Color.Gray;
-            this.l_med_3.Location = new System.Drawing.Point(415, 361);
+            this.l_med_3.Location = new System.Drawing.Point(415, 391);
             this.l_med_3.Name = "l_med_3";
             this.l_med_3.Size = new System.Drawing.Size(64, 90);
             this.l_med_3.TabIndex = 44;
@@ -314,7 +314,7 @@ namespace MaterialHaloSharp
             // 
             this.l_med_2.Font = new System.Drawing.Font("Roboto", 8F);
             this.l_med_2.ForeColor = System.Drawing.Color.Gray;
-            this.l_med_2.Location = new System.Drawing.Point(345, 361);
+            this.l_med_2.Location = new System.Drawing.Point(345, 391);
             this.l_med_2.Name = "l_med_2";
             this.l_med_2.Size = new System.Drawing.Size(60, 90);
             this.l_med_2.TabIndex = 43;
@@ -326,7 +326,7 @@ namespace MaterialHaloSharp
             // 
             this.l_med_1.Font = new System.Drawing.Font("Roboto", 8F);
             this.l_med_1.ForeColor = System.Drawing.Color.Gray;
-            this.l_med_1.Location = new System.Drawing.Point(275, 361);
+            this.l_med_1.Location = new System.Drawing.Point(275, 391);
             this.l_med_1.Name = "l_med_1";
             this.l_med_1.Size = new System.Drawing.Size(61, 90);
             this.l_med_1.TabIndex = 42;
@@ -339,7 +339,7 @@ namespace MaterialHaloSharp
             this.pb_medal10.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pb_medal10.Image = ((System.Drawing.Image)(resources.GetObject("pb_medal10.Image")));
             this.pb_medal10.InitialImage = ((System.Drawing.Image)(resources.GetObject("pb_medal10.InitialImage")));
-            this.pb_medal10.Location = new System.Drawing.Point(905, 294);
+            this.pb_medal10.Location = new System.Drawing.Point(905, 324);
             this.pb_medal10.Name = "pb_medal10";
             this.pb_medal10.Size = new System.Drawing.Size(64, 64);
             this.pb_medal10.TabIndex = 41;
@@ -350,7 +350,7 @@ namespace MaterialHaloSharp
             this.pb_medal9.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pb_medal9.Image = ((System.Drawing.Image)(resources.GetObject("pb_medal9.Image")));
             this.pb_medal9.InitialImage = ((System.Drawing.Image)(resources.GetObject("pb_medal9.InitialImage")));
-            this.pb_medal9.Location = new System.Drawing.Point(835, 294);
+            this.pb_medal9.Location = new System.Drawing.Point(835, 324);
             this.pb_medal9.Name = "pb_medal9";
             this.pb_medal9.Size = new System.Drawing.Size(64, 64);
             this.pb_medal9.TabIndex = 40;
@@ -361,7 +361,7 @@ namespace MaterialHaloSharp
             this.pb_medal8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pb_medal8.Image = ((System.Drawing.Image)(resources.GetObject("pb_medal8.Image")));
             this.pb_medal8.InitialImage = ((System.Drawing.Image)(resources.GetObject("pb_medal8.InitialImage")));
-            this.pb_medal8.Location = new System.Drawing.Point(765, 294);
+            this.pb_medal8.Location = new System.Drawing.Point(765, 324);
             this.pb_medal8.Name = "pb_medal8";
             this.pb_medal8.Size = new System.Drawing.Size(64, 64);
             this.pb_medal8.TabIndex = 39;
@@ -372,7 +372,7 @@ namespace MaterialHaloSharp
             this.pb_medal7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pb_medal7.Image = ((System.Drawing.Image)(resources.GetObject("pb_medal7.Image")));
             this.pb_medal7.InitialImage = ((System.Drawing.Image)(resources.GetObject("pb_medal7.InitialImage")));
-            this.pb_medal7.Location = new System.Drawing.Point(695, 294);
+            this.pb_medal7.Location = new System.Drawing.Point(695, 324);
             this.pb_medal7.Name = "pb_medal7";
             this.pb_medal7.Size = new System.Drawing.Size(64, 64);
             this.pb_medal7.TabIndex = 38;
@@ -383,7 +383,7 @@ namespace MaterialHaloSharp
             this.pb_medal6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pb_medal6.Image = ((System.Drawing.Image)(resources.GetObject("pb_medal6.Image")));
             this.pb_medal6.InitialImage = ((System.Drawing.Image)(resources.GetObject("pb_medal6.InitialImage")));
-            this.pb_medal6.Location = new System.Drawing.Point(625, 294);
+            this.pb_medal6.Location = new System.Drawing.Point(625, 324);
             this.pb_medal6.Name = "pb_medal6";
             this.pb_medal6.Size = new System.Drawing.Size(64, 64);
             this.pb_medal6.TabIndex = 37;
@@ -394,7 +394,7 @@ namespace MaterialHaloSharp
             this.pb_medal5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pb_medal5.Image = ((System.Drawing.Image)(resources.GetObject("pb_medal5.Image")));
             this.pb_medal5.InitialImage = ((System.Drawing.Image)(resources.GetObject("pb_medal5.InitialImage")));
-            this.pb_medal5.Location = new System.Drawing.Point(555, 294);
+            this.pb_medal5.Location = new System.Drawing.Point(555, 324);
             this.pb_medal5.Name = "pb_medal5";
             this.pb_medal5.Size = new System.Drawing.Size(64, 64);
             this.pb_medal5.TabIndex = 36;
@@ -405,7 +405,7 @@ namespace MaterialHaloSharp
             this.pb_medal4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pb_medal4.Image = ((System.Drawing.Image)(resources.GetObject("pb_medal4.Image")));
             this.pb_medal4.InitialImage = ((System.Drawing.Image)(resources.GetObject("pb_medal4.InitialImage")));
-            this.pb_medal4.Location = new System.Drawing.Point(485, 294);
+            this.pb_medal4.Location = new System.Drawing.Point(485, 324);
             this.pb_medal4.Name = "pb_medal4";
             this.pb_medal4.Size = new System.Drawing.Size(64, 64);
             this.pb_medal4.TabIndex = 35;
@@ -416,7 +416,7 @@ namespace MaterialHaloSharp
             this.pb_medal3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pb_medal3.Image = ((System.Drawing.Image)(resources.GetObject("pb_medal3.Image")));
             this.pb_medal3.InitialImage = ((System.Drawing.Image)(resources.GetObject("pb_medal3.InitialImage")));
-            this.pb_medal3.Location = new System.Drawing.Point(415, 294);
+            this.pb_medal3.Location = new System.Drawing.Point(415, 324);
             this.pb_medal3.Name = "pb_medal3";
             this.pb_medal3.Size = new System.Drawing.Size(64, 64);
             this.pb_medal3.TabIndex = 34;
@@ -427,7 +427,7 @@ namespace MaterialHaloSharp
             this.pb_medal2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pb_medal2.Image = ((System.Drawing.Image)(resources.GetObject("pb_medal2.Image")));
             this.pb_medal2.InitialImage = ((System.Drawing.Image)(resources.GetObject("pb_medal2.InitialImage")));
-            this.pb_medal2.Location = new System.Drawing.Point(345, 294);
+            this.pb_medal2.Location = new System.Drawing.Point(345, 324);
             this.pb_medal2.Name = "pb_medal2";
             this.pb_medal2.Size = new System.Drawing.Size(64, 64);
             this.pb_medal2.TabIndex = 33;
@@ -438,7 +438,7 @@ namespace MaterialHaloSharp
             this.pb_medal1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pb_medal1.Image = ((System.Drawing.Image)(resources.GetObject("pb_medal1.Image")));
             this.pb_medal1.InitialImage = ((System.Drawing.Image)(resources.GetObject("pb_medal1.InitialImage")));
-            this.pb_medal1.Location = new System.Drawing.Point(275, 294);
+            this.pb_medal1.Location = new System.Drawing.Point(275, 324);
             this.pb_medal1.Name = "pb_medal1";
             this.pb_medal1.Size = new System.Drawing.Size(64, 64);
             this.pb_medal1.TabIndex = 32;
@@ -446,15 +446,27 @@ namespace MaterialHaloSharp
             // 
             // l_h_medals
             // 
-            this.l_h_medals.AutoSize = true;
-            this.l_h_medals.Font = new System.Drawing.Font("Roboto", 14F);
-            this.l_h_medals.ForeColor = System.Drawing.Color.Gray;
-            this.l_h_medals.Location = new System.Drawing.Point(271, 267);
+            this.l_h_medals.BackColor = System.Drawing.Color.Transparent;
+            this.l_h_medals.Border = MaterialHaloSharp.Special_Controls.fxLabel.BorderType.none;
+            this.l_h_medals.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.l_h_medals.FillColor = System.Drawing.Color.CornflowerBlue;
+            this.l_h_medals.FillOpacity = 255;
+            this.l_h_medals.Font = new System.Drawing.Font("Roboto", 18F, System.Drawing.FontStyle.Bold);
+            this.l_h_medals.ForeColor = System.Drawing.Color.LightGray;
+            this.l_h_medals.GlowAnimationSpeed = 100;
+            this.l_h_medals.GlowColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.l_h_medals.GlowItensity = 10;
+            this.l_h_medals.GlowType = MaterialHaloSharp.Special_Controls.fxLabel.GlowTypes.AlwaysGlow;
+            this.l_h_medals.GradientStrength = 150;
+            this.l_h_medals.Image = null;
+            this.l_h_medals.ImageAlign = MaterialHaloSharp.Special_Controls.fxLabel.ImageAlignments.Center;
+            this.l_h_medals.Location = new System.Drawing.Point(271, 297);
             this.l_h_medals.Name = "l_h_medals";
+            this.l_h_medals.RoundRadius = 3;
             this.l_h_medals.Size = new System.Drawing.Size(108, 28);
             this.l_h_medals.TabIndex = 31;
             this.l_h_medals.Text = "Top-Medals";
-            this.l_h_medals.UseCompatibleTextRendering = true;
+            this.l_h_medals.TextAlign = System.Drawing.StringAlignment.Near;
             // 
             // l_totalShotsAccuracy
             // 
@@ -496,7 +508,7 @@ namespace MaterialHaloSharp
             // 
             this.materialDivider1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialDivider1.Depth = 0;
-            this.materialDivider1.Location = new System.Drawing.Point(268, 259);
+            this.materialDivider1.Location = new System.Drawing.Point(268, 283);
             this.materialDivider1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialDivider1.Name = "materialDivider1";
             this.materialDivider1.Size = new System.Drawing.Size(701, 5);
@@ -696,7 +708,7 @@ namespace MaterialHaloSharp
             this.circularProgressBar1.OuterCircleColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(57)))), ((int)(((byte)(3)))));
             this.circularProgressBar1.OuterCircleMargin = 0;
             this.circularProgressBar1.OuterCircleWidth = 0;
-            this.circularProgressBar1.ProgressCircleColor = System.Drawing.Color.Yellow;
+            this.circularProgressBar1.ProgressCircleColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(200)))), ((int)(((byte)(26)))));
             this.circularProgressBar1.ProgressCircleStartAngle = 180;
             this.circularProgressBar1.ProgressCircleWidth = 9;
             this.circularProgressBar1.Size = new System.Drawing.Size(150, 150);
@@ -744,7 +756,7 @@ namespace MaterialHaloSharp
             // fxLabel2
             // 
             this.fxLabel2.BackColor = System.Drawing.Color.Transparent;
-            this.fxLabel2.Border = fxLabel.BorderType.none;
+            this.fxLabel2.Border = MaterialHaloSharp.Special_Controls.fxLabel.BorderType.none;
             this.fxLabel2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.fxLabel2.FillColor = System.Drawing.Color.Maroon;
             this.fxLabel2.FillOpacity = 255;
@@ -753,10 +765,10 @@ namespace MaterialHaloSharp
             this.fxLabel2.GlowAnimationSpeed = 100;
             this.fxLabel2.GlowColor = System.Drawing.Color.Black;
             this.fxLabel2.GlowItensity = 10;
-            this.fxLabel2.GlowType = fxLabel.GlowTypes.AlwaysGlow;
+            this.fxLabel2.GlowType = MaterialHaloSharp.Special_Controls.fxLabel.GlowTypes.AlwaysGlow;
             this.fxLabel2.GradientStrength = 150;
             this.fxLabel2.Image = null;
-            this.fxLabel2.ImageAlign = fxLabel.ImageAlignments.Center;
+            this.fxLabel2.ImageAlign = MaterialHaloSharp.Special_Controls.fxLabel.ImageAlignments.Center;
             this.fxLabel2.Location = new System.Drawing.Point(9, 293);
             this.fxLabel2.Name = "fxLabel2";
             this.fxLabel2.RoundRadius = 3;
@@ -768,7 +780,7 @@ namespace MaterialHaloSharp
             // fxLabel1
             // 
             this.fxLabel1.BackColor = System.Drawing.Color.Transparent;
-            this.fxLabel1.Border = fxLabel.BorderType.none;
+            this.fxLabel1.Border = MaterialHaloSharp.Special_Controls.fxLabel.BorderType.none;
             this.fxLabel1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.fxLabel1.FillColor = System.Drawing.Color.Maroon;
             this.fxLabel1.FillOpacity = 255;
@@ -777,10 +789,10 @@ namespace MaterialHaloSharp
             this.fxLabel1.GlowAnimationSpeed = 100;
             this.fxLabel1.GlowColor = System.Drawing.Color.Black;
             this.fxLabel1.GlowItensity = 10;
-            this.fxLabel1.GlowType = fxLabel.GlowTypes.AlwaysGlow;
+            this.fxLabel1.GlowType = MaterialHaloSharp.Special_Controls.fxLabel.GlowTypes.AlwaysGlow;
             this.fxLabel1.GradientStrength = 150;
             this.fxLabel1.Image = null;
-            this.fxLabel1.ImageAlign = fxLabel.ImageAlignments.Center;
+            this.fxLabel1.ImageAlign = MaterialHaloSharp.Special_Controls.fxLabel.ImageAlignments.Center;
             this.fxLabel1.Location = new System.Drawing.Point(626, 293);
             this.fxLabel1.Name = "fxLabel1";
             this.fxLabel1.RoundRadius = 3;
@@ -1183,7 +1195,7 @@ namespace MaterialHaloSharp
         private System.Windows.Forms.PictureBox pb_medal3;
         private System.Windows.Forms.PictureBox pb_medal2;
         private System.Windows.Forms.PictureBox pb_medal1;
-        private System.Windows.Forms.Label l_h_medals;
+        private fxLabel l_h_medals;
         private System.Windows.Forms.Label l_warzoneTopWeapons_5;
         private System.Windows.Forms.Label l_warzoneTopWeapons_4;
         private System.Windows.Forms.Label l_warzoneTopWeapons_3;

@@ -15,7 +15,9 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
+using HaloSharp;
 using HaloSharp.Model;
 using HaloSharp.Model.Metadata;
 using HaloSharp.Model.Stats.Common;
@@ -31,12 +33,12 @@ namespace MaterialHaloSharp
         /// <summary>
         /// The http://developer.haloapi.com Api-Key
         /// </summary>
-        private const string Apikey = "";
+        public string Apikey = "";
 
         /// <summary>
         /// The gamertag
         /// </summary>
-        private const string Gamertag = "";
+        private string Gamertag = "";
 
         /// <summary>
         /// The meta data loaded
@@ -46,7 +48,12 @@ namespace MaterialHaloSharp
         /// <summary>
         /// The HaloApi-Connector Settings
         /// </summary>
-        private static readonly Product DevAcc = new Product { SubscriptionKey = Apikey, RateLimit = new RateLimit { RequestCount = 10, Timeout = new TimeSpan(0, 0, 0, 20), TimspSpan = new TimeSpan(0, 0, 0, 5000) } };
+        private readonly Product DevAcc = new Product { SubscriptionKey = Properties.Settings.Default.ApiKey, RateLimit = new RateLimit { RequestCount = 10, Timeout = Timeout.InfiniteTimeSpan, TimspSpan = new TimeSpan(0, 0, 0, 10) } };
+
+        
+
+        //private static HaloSharp.HaloSession session = new HaloSession(DevAcc);
+
 
         /// <summary>
         /// The spartan ranks
@@ -67,6 +74,21 @@ namespace MaterialHaloSharp
         /// The medals
         /// </summary>
         public List<Medal> Medals = null;
+
+        /// <summary>
+        /// The medals
+        /// </summary>
+        public List<MedalAward> TopMedals = null;
+
+        /// <summary>
+        /// The Weapons
+        /// </summary>
+        public List<Weapon> Weapons = null;
+
+        /// <summary>
+        /// The medals
+        /// </summary>
+        public List<HaloSharp.Model.Stats.Common.WeaponStat> WarzoneTopWeapons = null;
 
         /// <summary>
         /// The top medal labels
@@ -99,10 +121,8 @@ namespace MaterialHaloSharp
         /// </summary>
         public List<Label> WarzoneTopWeaponsLabels = new List<Label>();
 
-        /// <summary>
-        /// The medals
-        /// </summary>
-        public List<MedalAward> TopMedals = null;
+        
+
         /// <summary>
         /// The base result
         /// </summary>

@@ -95,7 +95,18 @@ namespace MaterialHaloSharp
         {
             return MedalList.Find(item => item.Id == MedalId);
         }
-        
+
+
+        /// <summary>
+        /// Gets the weapon from weapon list.
+        /// </summary>
+        /// <param name="WeaponList">The weapon list.</param>
+        /// <param name="WeaponId">The weapon identifier.</param>
+        /// <returns>HaloSharp.Model.Metadata.Weapon.</returns>
+        public static Weapon GetWeaponFromWeaponList(List<Weapon> WeaponList, uint WeaponId)
+        {
+            return WeaponList.Find(item => item.Id == WeaponId);
+        }
 
     }
 

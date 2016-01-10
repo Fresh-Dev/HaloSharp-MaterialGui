@@ -40,7 +40,8 @@ namespace MaterialHaloSharp
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey900, Primary.BlueGrey400, Primary.BlueGrey50, Accent.Red200, TextShade.WHITE);
-            
+            Apikey = Properties.Settings.Default.ApiKey;
+            Gamertag = Properties.Settings.Default.Gamertag;
 
             #region Fill <Control> Lists for Overview Tab
             //Fill LabelCollection for Overview-Tab's TopMedal-Labels
@@ -77,11 +78,11 @@ namespace MaterialHaloSharp
             WarzoneTopMedalLabels.Add(l_warzoneTopMedals_5);
 
             //Fill LabelCollection for Warzones-Tab's TopWeapons-Labels
-            WarzoneTopMedalLabels.Add(l_warzoneTopWeapons_1);
-            WarzoneTopMedalLabels.Add(l_warzoneTopWeapons_2);
-            WarzoneTopMedalLabels.Add(l_warzoneTopWeapons_3);
-            WarzoneTopMedalLabels.Add(l_warzoneTopWeapons_4);
-            WarzoneTopMedalLabels.Add(l_warzoneTopWeapons_5);
+            WarzoneTopWeaponsLabels.Add(l_warzoneTopWeapons_1);
+            WarzoneTopWeaponsLabels.Add(l_warzoneTopWeapons_2);
+            WarzoneTopWeaponsLabels.Add(l_warzoneTopWeapons_3);
+            WarzoneTopWeaponsLabels.Add(l_warzoneTopWeapons_4);
+            WarzoneTopWeaponsLabels.Add(l_warzoneTopWeapons_5);
 
 
             //Fill PictureBoxCollection for Warzones-Tab's TopMedal-Labels
@@ -92,11 +93,11 @@ namespace MaterialHaloSharp
             WarzoneTopMedalPicBoxes.Add(pbWarzoneTopMedals_5);
 
             //Fill PictureBoxCollection for Warzones-Tab's TopWeapons-Labels
-            WarzoneTopMedalPicBoxes.Add(pbWarzoneTopWeapons_1);
-            WarzoneTopMedalPicBoxes.Add(pbWarzoneTopWeapons_2);
-            WarzoneTopMedalPicBoxes.Add(pbWarzoneTopWeapons_3);
-            WarzoneTopMedalPicBoxes.Add(pbWarzoneTopWeapons_4);
-            WarzoneTopMedalPicBoxes.Add(pbWarzoneTopWeapons_5);
+            WarzoneTopWeaponsPicBoxes.Add(pbWarzoneTopWeapons_1);
+            WarzoneTopWeaponsPicBoxes.Add(pbWarzoneTopWeapons_2);
+            WarzoneTopWeaponsPicBoxes.Add(pbWarzoneTopWeapons_3);
+            WarzoneTopWeaponsPicBoxes.Add(pbWarzoneTopWeapons_4);
+            WarzoneTopWeaponsPicBoxes.Add(pbWarzoneTopWeapons_5);
             #endregion
 
             GetGlobalMetaData();
