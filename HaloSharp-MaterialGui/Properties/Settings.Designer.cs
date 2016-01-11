@@ -58,5 +58,28 @@ namespace MaterialHaloSharp.Properties {
                 this["UpdateRateInSec"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2015-09-08")]
+        public global::System.DateTime MetaDataLastUpdated {
+            get {
+                return ((global::System.DateTime)(this["MetaDataLastUpdated"]));
+            }
+            set {
+                this["MetaDataLastUpdated"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::HaloSharp.Model.Metadata.Medal Setting {
+            get {
+                return ((global::HaloSharp.Model.Metadata.Medal)(this["Setting"]));
+            }
+            set {
+                this["Setting"] = value;
+            }
+        }
     }
 }

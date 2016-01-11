@@ -5,10 +5,6 @@ namespace MaterialHaloSharp
 {
     public partial class Mainform : MaterialForm
     {
-        /// <summary>
-        /// Erforderliche Designervariable.
-        /// </summary>
-        public System.ComponentModel.IContainer components = null;
 
         /// <summary>
         /// Verwendete Ressourcen bereinigen.
@@ -31,6 +27,7 @@ namespace MaterialHaloSharp
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Mainform));
             this.materialTabSelector1 = new MaterialSkin.Controls.MaterialTabSelector();
             this.materialTabControl1 = new MaterialSkin.Controls.MaterialTabControl();
@@ -103,12 +100,13 @@ namespace MaterialHaloSharp
             this.materialContextMenuStrip1 = new MaterialSkin.Controls.MaterialContextMenuStrip();
             this.asasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.asToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.l_h_medals = new MaterialHaloSharp.Special_Controls.fxLabel();
             this.circularProgressBar1 = new MaterialHaloSharp.Special_Controls.CircularProgressBar();
+            this.fxLabel3 = new MaterialHaloSharp.Special_Controls.fxLabel();
+            this.circularProgressBar2 = new MaterialHaloSharp.Special_Controls.CircularProgressBar();
             this.fxLabel2 = new MaterialHaloSharp.Special_Controls.fxLabel();
             this.fxLabel1 = new MaterialHaloSharp.Special_Controls.fxLabel();
-            this.circularProgressBar2 = new MaterialHaloSharp.Special_Controls.CircularProgressBar();
-            this.fxLabel3 = new MaterialHaloSharp.Special_Controls.fxLabel();
             this.materialTabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_medal10)).BeginInit();
@@ -965,7 +963,7 @@ namespace MaterialHaloSharp
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Size = new System.Drawing.Size(976, 491);
             this.tabPage6.TabIndex = 5;
-            this.tabPage6.Text = "Commendations";
+            this.tabPage6.Text = "Settings";
             this.tabPage6.UseVisualStyleBackColor = true;
             // 
             // tabPage7
@@ -975,7 +973,7 @@ namespace MaterialHaloSharp
             this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage7.Size = new System.Drawing.Size(976, 491);
             this.tabPage7.TabIndex = 6;
-            this.tabPage7.Text = "Settings";
+            this.tabPage7.Text = "DEBUG";
             this.tabPage7.UseVisualStyleBackColor = true;
             // 
             // materialContextMenuStrip1
@@ -1058,6 +1056,62 @@ namespace MaterialHaloSharp
             this.circularProgressBar1.TotalAngle = 180;
             this.circularProgressBar1.Value = 0F;
             // 
+            // fxLabel3
+            // 
+            this.fxLabel3.BackColor = System.Drawing.Color.Transparent;
+            this.fxLabel3.Border = MaterialHaloSharp.Special_Controls.fxLabel.BorderType.none;
+            this.fxLabel3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.fxLabel3.FillColor = System.Drawing.Color.Maroon;
+            this.fxLabel3.FillOpacity = 255;
+            this.fxLabel3.Font = new System.Drawing.Font("Roboto", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fxLabel3.ForeColor = System.Drawing.Color.LightGray;
+            this.fxLabel3.GlowAnimationSpeed = 100;
+            this.fxLabel3.GlowColor = System.Drawing.Color.Black;
+            this.fxLabel3.GlowItensity = 10;
+            this.fxLabel3.GlowType = MaterialHaloSharp.Special_Controls.fxLabel.GlowTypes.AlwaysGlow;
+            this.fxLabel3.GradientStrength = 150;
+            this.fxLabel3.Image = null;
+            this.fxLabel3.ImageAlign = MaterialHaloSharp.Special_Controls.fxLabel.ImageAlignments.Center;
+            this.fxLabel3.Location = new System.Drawing.Point(437, 293);
+            this.fxLabel3.Name = "fxLabel3";
+            this.fxLabel3.RoundRadius = 3;
+            this.fxLabel3.Size = new System.Drawing.Size(102, 29);
+            this.fxLabel3.TabIndex = 77;
+            this.fxLabel3.Text = "Win / Lost";
+            this.fxLabel3.TextAlign = System.Drawing.StringAlignment.Near;
+            // 
+            // circularProgressBar2
+            // 
+            this.circularProgressBar2.AnimatorDuration = 500;
+            this.circularProgressBar2.AnimatorFunction = ((WinFormAnimation.Functions.Function)(resources.GetObject("circularProgressBar2.AnimatorFunction")));
+            this.circularProgressBar2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.circularProgressBar2.Caption = "Loading";
+            this.circularProgressBar2.CaptionMargin = -30;
+            this.circularProgressBar2.Font = new System.Drawing.Font("Roboto", 14F);
+            this.circularProgressBar2.ForeColor = System.Drawing.Color.LightGray;
+            this.circularProgressBar2.InnerCircleColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(57)))), ((int)(((byte)(3)))));
+            this.circularProgressBar2.InnerCircleMargin = 0;
+            this.circularProgressBar2.InnerCircleWidth = 0;
+            this.circularProgressBar2.Location = new System.Drawing.Point(416, 328);
+            this.circularProgressBar2.MaxValue = 100F;
+            this.circularProgressBar2.MinValue = 0F;
+            this.circularProgressBar2.Name = "circularProgressBar2";
+            this.circularProgressBar2.OuterCircleColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(57)))), ((int)(((byte)(3)))));
+            this.circularProgressBar2.OuterCircleMargin = 0;
+            this.circularProgressBar2.OuterCircleWidth = 0;
+            this.circularProgressBar2.ProgressCircleColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(200)))), ((int)(((byte)(26)))));
+            this.circularProgressBar2.ProgressCircleStartAngle = 180;
+            this.circularProgressBar2.ProgressCircleWidth = 9;
+            this.circularProgressBar2.Size = new System.Drawing.Size(150, 150);
+            this.circularProgressBar2.SubText = null;
+            this.circularProgressBar2.SubTextColor = System.Drawing.Color.Gray;
+            this.circularProgressBar2.SupSubFont = new System.Drawing.Font("Microsoft Sans Serif", 4.125F);
+            this.circularProgressBar2.SupText = null;
+            this.circularProgressBar2.SupTextColor = System.Drawing.Color.Gray;
+            this.circularProgressBar2.TabIndex = 76;
+            this.circularProgressBar2.TotalAngle = 180;
+            this.circularProgressBar2.Value = 0F;
+            // 
             // fxLabel2
             // 
             this.fxLabel2.BackColor = System.Drawing.Color.Transparent;
@@ -1106,62 +1160,6 @@ namespace MaterialHaloSharp
             this.fxLabel1.Text = "Top-Weapons";
             this.fxLabel1.TextAlign = System.Drawing.StringAlignment.Near;
             // 
-            // circularProgressBar2
-            // 
-            this.circularProgressBar2.AnimatorDuration = 500;
-            this.circularProgressBar2.AnimatorFunction = ((WinFormAnimation.Functions.Function)(resources.GetObject("circularProgressBar2.AnimatorFunction")));
-            this.circularProgressBar2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.circularProgressBar2.Caption = "Loading";
-            this.circularProgressBar2.CaptionMargin = -30;
-            this.circularProgressBar2.Font = new System.Drawing.Font("Roboto", 14F);
-            this.circularProgressBar2.ForeColor = System.Drawing.Color.LightGray;
-            this.circularProgressBar2.InnerCircleColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(57)))), ((int)(((byte)(3)))));
-            this.circularProgressBar2.InnerCircleMargin = 0;
-            this.circularProgressBar2.InnerCircleWidth = 0;
-            this.circularProgressBar2.Location = new System.Drawing.Point(416, 328);
-            this.circularProgressBar2.MaxValue = 100F;
-            this.circularProgressBar2.MinValue = 0F;
-            this.circularProgressBar2.Name = "circularProgressBar2";
-            this.circularProgressBar2.OuterCircleColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(57)))), ((int)(((byte)(3)))));
-            this.circularProgressBar2.OuterCircleMargin = 0;
-            this.circularProgressBar2.OuterCircleWidth = 0;
-            this.circularProgressBar2.ProgressCircleColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(200)))), ((int)(((byte)(26)))));
-            this.circularProgressBar2.ProgressCircleStartAngle = 180;
-            this.circularProgressBar2.ProgressCircleWidth = 9;
-            this.circularProgressBar2.Size = new System.Drawing.Size(150, 150);
-            this.circularProgressBar2.SubText = null;
-            this.circularProgressBar2.SubTextColor = System.Drawing.Color.Gray;
-            this.circularProgressBar2.SupSubFont = new System.Drawing.Font("Microsoft Sans Serif", 4.125F);
-            this.circularProgressBar2.SupText = null;
-            this.circularProgressBar2.SupTextColor = System.Drawing.Color.Gray;
-            this.circularProgressBar2.TabIndex = 76;
-            this.circularProgressBar2.TotalAngle = 180;
-            this.circularProgressBar2.Value = 0F;
-            // 
-            // fxLabel3
-            // 
-            this.fxLabel3.BackColor = System.Drawing.Color.Transparent;
-            this.fxLabel3.Border = MaterialHaloSharp.Special_Controls.fxLabel.BorderType.none;
-            this.fxLabel3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.fxLabel3.FillColor = System.Drawing.Color.Maroon;
-            this.fxLabel3.FillOpacity = 255;
-            this.fxLabel3.Font = new System.Drawing.Font("Roboto", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.fxLabel3.ForeColor = System.Drawing.Color.LightGray;
-            this.fxLabel3.GlowAnimationSpeed = 100;
-            this.fxLabel3.GlowColor = System.Drawing.Color.Black;
-            this.fxLabel3.GlowItensity = 10;
-            this.fxLabel3.GlowType = MaterialHaloSharp.Special_Controls.fxLabel.GlowTypes.AlwaysGlow;
-            this.fxLabel3.GradientStrength = 150;
-            this.fxLabel3.Image = null;
-            this.fxLabel3.ImageAlign = MaterialHaloSharp.Special_Controls.fxLabel.ImageAlignments.Center;
-            this.fxLabel3.Location = new System.Drawing.Point(437, 293);
-            this.fxLabel3.Name = "fxLabel3";
-            this.fxLabel3.RoundRadius = 3;
-            this.fxLabel3.Size = new System.Drawing.Size(102, 29);
-            this.fxLabel3.TabIndex = 77;
-            this.fxLabel3.Text = "Win / Lost";
-            this.fxLabel3.TextAlign = System.Drawing.StringAlignment.Near;
-            // 
             // Mainform
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1169,6 +1167,7 @@ namespace MaterialHaloSharp
             this.ClientSize = new System.Drawing.Size(980, 637);
             this.Controls.Add(this.materialTabSelector1);
             this.Controls.Add(this.materialTabControl1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Mainform";
             this.Text = "Halo5 API-Test";
             this.materialTabControl1.ResumeLayout(false);
@@ -1204,6 +1203,8 @@ namespace MaterialHaloSharp
 
         #endregion
 
+        
+
         private MaterialSkin.Controls.MaterialTabSelector materialTabSelector1;
         private MaterialSkin.Controls.MaterialTabControl materialTabControl1;
         private System.Windows.Forms.TabPage tabPage1;
@@ -1218,7 +1219,6 @@ namespace MaterialHaloSharp
         private System.Windows.Forms.Label l_gamertag_;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.TabPage tabPage5;
-        private System.Windows.Forms.TabPage tabPage6;
         private System.Windows.Forms.Label l_rank_;
         private System.Windows.Forms.Label l_time_played;
         private System.Windows.Forms.Label l_totalDeaths;
@@ -1281,6 +1281,9 @@ namespace MaterialHaloSharp
         private System.Windows.Forms.TabPage tabPage7;
         private fxLabel fxLabel3;
         private CircularProgressBar circularProgressBar2;
+        private System.Windows.Forms.TabPage tabPage6;
+        private System.Windows.Forms.Timer timer1;
+        private System.ComponentModel.IContainer components;
     }
 }
 

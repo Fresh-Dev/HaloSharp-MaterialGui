@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HaloSharp.Model.Metadata;
 using HaloSharp.Model.Stats.Common;
+using Tulpep.NotificationWindow;
 
 namespace MaterialHaloSharp
 {    
@@ -108,6 +109,89 @@ namespace MaterialHaloSharp
             return WeaponList.Find(item => item.Id == WeaponId);
         }
 
+        /// <summary>
+        /// Writes the given object instance to a binary file.
+        /// <para>Object type (and all child types) must be decorated with the [Serializable] attribute.</para>
+        /// <para>To prevent a variable from being serialized, decorate it with the [NonSerialized] attribute; cannot be applied to properties.</para>
+        /// </summary>
+        /// <typeparam name="T">The type of object being written to the XML file.</typeparam>
+        /// <param name="filePath">The file path to write the object instance to.</param>
+        /// <param name="objectToWrite">The object instance to write to the XML file.</param>
+        /// <param name="append">If false the file will be overwritten if it already exists. If true the contents will be appended to the file.</param>
+        public static void WriteToBinaryFile<T>(string filePath, T objectToWrite, bool append = false)
+        {
+            using (Stream stream = File.Open(filePath, append ? FileMode.Append : FileMode.Create))
+            {
+                var binaryFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                binaryFormatter.Serialize(stream, objectToWrite);
+            }
+        }
+
+        /// <summary>
+        /// Reads an object instance from a binary file.
+        /// </summary>
+        /// <typeparam name="T">The type of object to read from the XML.</typeparam>
+        /// <param name="filePath">The file path to read the object instance from.</param>
+        /// <returns>Returns a new instance of the object read from the binary file.</returns>
+        public static T ReadFromBinaryFile<T>(string filePath)
+        {
+            using (Stream stream = File.Open(filePath, FileMode.Open))
+            {
+                var binaryFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                return (T)binaryFormatter.Deserialize(stream);
+            }
+        }
+
+        public static void ShowNotification(string HeaderText, string BodyText)
+        {
+            var popupNotifier = new PopupNotifier
+            {
+                TitleText = HeaderText,
+                TitleFont = new Font("Roboto", 14F, System.Drawing.FontStyle.Bold),
+                ContentText = BodyText,
+                BodyColor = Color.FromArgb(30, 30, 30),
+                TitleColor = Color.LightGray,
+                ContentColor = Color.LightGray,
+                Image = Tools.ScaleImage(Properties.Resources.Unbenannt_1,64,64),
+                ShowGrip = false
+            };
+            popupNotifier.AnimationDuration = 2000;
+            popupNotifier.Popup();
+        }
+
+        /// <summary>
+        /// Checks if a given file exists.
+        /// </summary>
+        /// <param name="Filename">The filename to check for existance.</param>
+        /// <param name="CaseSensitive">Whether or not the search should be case-sensitive.</param>
+        /// <returns>True if the given file exists, false if it does not.</returns>
+        public static bool FileExists(string Filename, bool CaseSensitive=true)
+        {
+            // first, check if this file exists not counting cast
+            bool FileExists = File.Exists(Filename);
+
+            // if they don't care about case, just return what we already know
+            if (!CaseSensitive)
+            {
+                return FileExists;
+            }
+
+            // if this file didn't exist, just return now
+            if (!FileExists)
+            {
+                return false;
+            }
+
+            // to check the case, we're going to get a file list from the directory to compare against
+            FileInfo Info = new FileInfo(Filename);
+            FileInfo[] Files = Info.Directory.GetFiles(Filename, SearchOption.TopDirectoryOnly);
+
+            // since we specified the filename as a pattern, we should have gotten exactly that one file returned
+            System.Diagnostics.Debug.Assert(Files.Length == 1);
+
+            // check to make sure the one filename received matches the entered filename, case-sensitively
+            return (Filename == Files[0].Name);
+        }
     }
 
 }

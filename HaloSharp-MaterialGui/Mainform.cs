@@ -11,14 +11,17 @@
 // </copyright>
 // <summary>Mainform Init-File</summary>
 // ***********************************************************************
+
 using System;
 using System.Drawing.Text;
 using System.Windows.Forms;
 using MaterialHaloSharp;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using MaterialSkin;
 using MaterialSkin.Controls;
+using Tulpep.NotificationWindow;
 
 namespace MaterialHaloSharp
 {
@@ -29,6 +32,7 @@ namespace MaterialHaloSharp
         /// </summary>
         public partial class Mainform : MaterialForm
         {
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Mainform" /> class.
@@ -101,9 +105,9 @@ namespace MaterialHaloSharp
             #endregion
 
             GetGlobalMetaData();
+            
 
-            
-            
+
         }
     }
 }

@@ -11,26 +11,25 @@
 // </copyright>
 // <summary>Halo-API Calls for Mainform</summary>
 // ***********************************************************************
+
 using System;
-using System.ComponentModel;
+using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.Drawing.Text;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using MaterialSkin;
-using MaterialSkin.Controls;
 using HaloSharp;
 using HaloSharp.Extension;
 using HaloSharp.Model.Metadata;
-using HaloSharp.Model.Stats;
-using HaloSharp.Model.Stats.Common;
+using HaloSharp.Model.Stats.Lifetime;
 using HaloSharp.Query.Metadata;
+using HaloSharp.Query.Profile;
 using HaloSharp.Query.Stats.Lifetime;
 using MaterialHaloSharp.Properties;
-using ObjectDumper;
+using Newtonsoft.Json;
+using Tulpep.NotificationWindow;
 
 namespace MaterialHaloSharp
 {
@@ -39,11 +38,13 @@ namespace MaterialHaloSharp
     /// </summary>
     public partial class Mainform
     {
+        
+
         //Main-Querys (Define them Public, and update them at first Api-Call (may after GetMetadata if u want) and Update them on every global value update. If u update them to often / to fast, you'll get API-Limit exeed error)
-        public HaloSharp.Model.Stats.Lifetime.CustomServiceRecord customServiceRecord;
-        public HaloSharp.Model.Stats.Lifetime.WarzoneServiceRecord warzoneServiceRecord;
-        public HaloSharp.Model.Stats.Lifetime.ArenaServiceRecord arenaServiceRecord;
-        public HaloSharp.Model.Stats.Lifetime.CampaignServiceRecord campaignServiceRecord;
+        public CustomServiceRecord CustomServiceRecord;
+        public WarzoneServiceRecord WarzoneServiceRecord;
+        public ArenaServiceRecord ArenaServiceRecord;
+        public CampaignServiceRecord CampaignServiceRecord;
 
         /// <summary>
         /// Gets the global halo5 meta data.
@@ -51,16 +52,65 @@ namespace MaterialHaloSharp
         public async void GetGlobalMetaData()
         {
             var client = new HaloClient(DevAcc);
-            using (var session = client.StartSession())
-            {
-                SpartanRanks = await session.Query(new GetSpartanRanks());
-                
-                Maps = await session.Query(new GetMaps());
-                Medals = await session.Query(new GetMedals());
-                Weapons = await session.Query(new GetWeapons());
-            }
 
+            if (!Tools.FileExists("MetaSpartanRanks.bin") || !Tools.FileExists("MetaMaps.bin") || !Tools.FileExists("MetaMedals.bin") || !Tools.FileExists("MetaWeapons.bin"))
+                {
+                using (var session = client.StartSession())
+                {
+                    SpartanRanks = await session.Query(new GetSpartanRanks());
+                    Tools.WriteToBinaryFile("MetaSpartanRanks.bin",SpartanRanks);
+
+                    Maps = await session.Query(new GetMaps());
+                    Tools.WriteToBinaryFile("MetaMaps.bin", Maps);
+
+                    Medals = await session.Query(new GetMedals());
+                    Tools.WriteToBinaryFile("MetaMedals.bin", Medals);
+
+                    Weapons = await session.Query(new GetWeapons());
+                    Tools.WriteToBinaryFile("MetaWeapons.bin", Weapons);
+
+                    Settings.Default.MetaDataLastUpdated = DateTime.Now;
+                    Settings.Default.Save();
+
+                    Tools.ShowNotification("Metadata Updated!", "The Metadata-Databases for SpartanRanks, Maps, Medals, Weapons and Vehicles is now up-to-date!");
+                }
+            }
+            else
+            {
+                try { SpartanRanks = Tools.ReadFromBinaryFile <List<SpartanRank>>("MetaSpartanRanks.bin"); }
+                catch (Exception e)
+                {
+                    using (var session = client.StartSession()){SpartanRanks = await session.Query(new GetSpartanRanks());}
+                    Tools.WriteToBinaryFile("MetaSpartanRanks.bin", SpartanRanks);
+                    Tools.ShowNotification("SpartanRanks Updated!", "The Metadata-Databases for SpartanRanks has been updated!\nDatabase-File had an error!");
+                }
+
+                try { Medals = Tools.ReadFromBinaryFile<List<Medal>>("MetaMedals.bin"); }
+                catch (Exception e)
+                {
+                    using (var session = client.StartSession()) { Medals = await session.Query(new GetMedals()); }
+                    Tools.WriteToBinaryFile("MetaMedals.bin", Medals);
+                    Tools.ShowNotification("Medals Updated!", "The Metadata-Databases for Medals has been updated!\nDatabase-File had an error!");
+                }
+
+                try { Maps = Tools.ReadFromBinaryFile<List<Map>>("MetaMaps.bin"); }
+                catch (Exception e)
+                {
+                    using (var session = client.StartSession()) { Maps = await session.Query(new GetMaps()); }
+                    Tools.WriteToBinaryFile("MetaMaps.bin", Maps);
+                    Tools.ShowNotification("Maps Updated!", "The Metadata-Databases for Maps has been updated!\nDatabase-File had an error!");
+                }
+
+                try { Weapons = Tools.ReadFromBinaryFile<List<Weapon>>("MetaWeapons.bin"); }
+                catch (Exception e)
+                {
+                    using (var session = client.StartSession()) { Weapons = await session.Query(new GetWeapons()); }
+                    Tools.WriteToBinaryFile("MetaWeapons.bin", Weapons);
+                    Tools.ShowNotification("Weapons Updated!", "The Metadata-Databases for Weapons has been updated!\nDatabase-File had an error!");
+                }
+            }
             MetaDataLoaded = true;
+
             //Call the next API-Set Call
             UpdateOverview();
         }
@@ -76,97 +126,97 @@ namespace MaterialHaloSharp
             using (var session = client.StartSession())
             {
                 // Get the current Base-Informations
-                customServiceRecord = await session.Query(new GetCustomServiceRecord().ForPlayer(Gamertag));
-                warzoneServiceRecord = await session.Query(new GetWarzoneServiceRecord().ForPlayer(Gamertag));
-                arenaServiceRecord = await session.Query(new GetArenaServiceRecord().ForPlayer(Gamertag));
-                campaignServiceRecord = await session.Query(new GetCampaignServiceRecord().ForPlayer(Gamertag));
+                CustomServiceRecord = await session.Query(new GetCustomServiceRecord().ForPlayer(Gamertag));
+                WarzoneServiceRecord = await session.Query(new GetWarzoneServiceRecord().ForPlayer(Gamertag));
+                ArenaServiceRecord = await session.Query(new GetArenaServiceRecord().ForPlayer(Gamertag));
+                CampaignServiceRecord = await session.Query(new GetCampaignServiceRecord().ForPlayer(Gamertag));
 
                 // Calculate the "All-Modes" total played time
-                var totalPlayTime = warzoneServiceRecord.Results[0].Result.WarzoneStat.TotalTimePlayed +
-                                    arenaServiceRecord.Results[0].Result.ArenaStats.TotalTimePlayed +
-                                    campaignServiceRecord.Results[0].Result.CampaignStat.TotalTimePlayed;
+                var totalPlayTime = WarzoneServiceRecord.Results[0].Result.WarzoneStat.TotalTimePlayed +
+                                    ArenaServiceRecord.Results[0].Result.ArenaStats.TotalTimePlayed +
+                                    CampaignServiceRecord.Results[0].Result.CampaignStat.TotalTimePlayed;
 
                 // Parse the total played time to a custom string
                 var totalPlayTimeString = $"{totalPlayTime.Days}D {totalPlayTime.Hours}Hr {totalPlayTime.Minutes}Min";
 
                 // Calculate the "All-Modes" total kills
-                var totalKills = customServiceRecord.Results[0].Result.CustomStats.TotalKills +
-                                 warzoneServiceRecord.Results[0].Result.WarzoneStat.TotalKills +
-                                 arenaServiceRecord.Results[0].Result.ArenaStats.TotalKills;
+                var totalKills = CustomServiceRecord.Results[0].Result.CustomStats.TotalKills +
+                                 WarzoneServiceRecord.Results[0].Result.WarzoneStat.TotalKills +
+                                 ArenaServiceRecord.Results[0].Result.ArenaStats.TotalKills;
 
                 // Calculate the "All-Modes" total deaths
-                var totalDeath = customServiceRecord.Results[0].Result.CustomStats.TotalDeaths +
-                                 warzoneServiceRecord.Results[0].Result.WarzoneStat.TotalDeaths +
-                                 arenaServiceRecord.Results[0].Result.ArenaStats.TotalDeaths;
+                var totalDeath = CustomServiceRecord.Results[0].Result.CustomStats.TotalDeaths +
+                                 WarzoneServiceRecord.Results[0].Result.WarzoneStat.TotalDeaths +
+                                 ArenaServiceRecord.Results[0].Result.ArenaStats.TotalDeaths;
 
                 // Calculate the "All-Modes" total assists
-                var totalAssists = customServiceRecord.Results[0].Result.CustomStats.TotalAssists +
-                                   warzoneServiceRecord.Results[0].Result.WarzoneStat.TotalAssists +
-                                   arenaServiceRecord.Results[0].Result.ArenaStats.TotalAssists;
+                var totalAssists = CustomServiceRecord.Results[0].Result.CustomStats.TotalAssists +
+                                   WarzoneServiceRecord.Results[0].Result.WarzoneStat.TotalAssists +
+                                   ArenaServiceRecord.Results[0].Result.ArenaStats.TotalAssists;
 
                 // Calculate the "All-Modes" total headshots
-                var totalHeadshots = customServiceRecord.Results[0].Result.CustomStats.TotalHeadshots +
-                                     warzoneServiceRecord.Results[0].Result.WarzoneStat.TotalHeadshots +
-                                     arenaServiceRecord.Results[0].Result.ArenaStats.TotalHeadshots;
+                var totalHeadshots = CustomServiceRecord.Results[0].Result.CustomStats.TotalHeadshots +
+                                     WarzoneServiceRecord.Results[0].Result.WarzoneStat.TotalHeadshots +
+                                     ArenaServiceRecord.Results[0].Result.ArenaStats.TotalHeadshots;
 
                 // Calculate the "All-Modes" total TotalShots
-                var totalShotsFired = customServiceRecord.Results[0].Result.CustomStats.TotalShotsFired +
-                                      warzoneServiceRecord.Results[0].Result.WarzoneStat.TotalShotsFired +
-                                      arenaServiceRecord.Results[0].Result.ArenaStats.TotalShotsFired;
+                var totalShotsFired = CustomServiceRecord.Results[0].Result.CustomStats.TotalShotsFired +
+                                      WarzoneServiceRecord.Results[0].Result.WarzoneStat.TotalShotsFired +
+                                      ArenaServiceRecord.Results[0].Result.ArenaStats.TotalShotsFired;
 
                 // Calculate the "All-Modes" total headshots
-                var totalShotsLanded = customServiceRecord.Results[0].Result.CustomStats.TotalShotsLanded +
-                                       warzoneServiceRecord.Results[0].Result.WarzoneStat.TotalShotsLanded +
-                                       arenaServiceRecord.Results[0].Result.ArenaStats.TotalShotsLanded;
+                var totalShotsLanded = CustomServiceRecord.Results[0].Result.CustomStats.TotalShotsLanded +
+                                       WarzoneServiceRecord.Results[0].Result.WarzoneStat.TotalShotsLanded +
+                                       ArenaServiceRecord.Results[0].Result.ArenaStats.TotalShotsLanded;
 
                 // Calculate the "All-Modes" total assassinations
-                var totalAssassinations = customServiceRecord.Results[0].Result.CustomStats.TotalAssassinations +
-                                          warzoneServiceRecord.Results[0].Result.WarzoneStat.TotalAssassinations +
-                                          arenaServiceRecord.Results[0].Result.ArenaStats.TotalAssassinations;
+                var totalAssassinations = CustomServiceRecord.Results[0].Result.CustomStats.TotalAssassinations +
+                                          WarzoneServiceRecord.Results[0].Result.WarzoneStat.TotalAssassinations +
+                                          ArenaServiceRecord.Results[0].Result.ArenaStats.TotalAssassinations;
 
                 // Calculate the "All-Modes" total game-counts
-                var totalGames = customServiceRecord.Results[0].Result.CustomStats.TotalGamesCompleted +
-                                 warzoneServiceRecord.Results[0].Result.WarzoneStat.TotalGamesCompleted +
-                                 arenaServiceRecord.Results[0].Result.ArenaStats.TotalGamesCompleted;
+                var totalGames = CustomServiceRecord.Results[0].Result.CustomStats.TotalGamesCompleted +
+                                 WarzoneServiceRecord.Results[0].Result.WarzoneStat.TotalGamesCompleted +
+                                 ArenaServiceRecord.Results[0].Result.ArenaStats.TotalGamesCompleted;
 
                 // Calculate the "All-Modes" total wins
-                var totalWon = customServiceRecord.Results[0].Result.CustomStats.TotalGamesWon +
-                               warzoneServiceRecord.Results[0].Result.WarzoneStat.TotalGamesWon +
-                               arenaServiceRecord.Results[0].Result.ArenaStats.TotalGamesWon;
+                var totalWon = CustomServiceRecord.Results[0].Result.CustomStats.TotalGamesWon +
+                               WarzoneServiceRecord.Results[0].Result.WarzoneStat.TotalGamesWon +
+                               ArenaServiceRecord.Results[0].Result.ArenaStats.TotalGamesWon;
 
                 // Calculate the "All-Modes" total losts
-                var totalLost = customServiceRecord.Results[0].Result.CustomStats.TotalGamesLost +
-                                warzoneServiceRecord.Results[0].Result.WarzoneStat.TotalGamesLost +
-                                arenaServiceRecord.Results[0].Result.ArenaStats.TotalGamesLost;
+                var totalLost = CustomServiceRecord.Results[0].Result.CustomStats.TotalGamesLost +
+                                WarzoneServiceRecord.Results[0].Result.WarzoneStat.TotalGamesLost +
+                                ArenaServiceRecord.Results[0].Result.ArenaStats.TotalGamesLost;
 
                 // Grab gamers current SpartanRank
-                var currentSpartanRank = customServiceRecord.Results[0].Result.SpartanRank;
+                var currentSpartanRank = CustomServiceRecord.Results[0].Result.SpartanRank;
 
                 // Grab gamers current XP
-                var currentSpartanXp = customServiceRecord.Results[0].Result.Xp;
+                var currentSpartanXp = CustomServiceRecord.Results[0].Result.Xp;
 
                 // Grab gamers current SpartanRank's progress percentage
-                var percentSpartanRankCurrent = SpartanRankGetPercentage(currentSpartanXp);
+                var percentSpartanRankCurrent = SpartanRankGetPercentage(currentSpartanXp,currentSpartanRank);
 
                 // Grab gamers current emblem
                 var playerImgEmblem =
-                    await session.Query(new HaloSharp.Query.Profile.GetEmblemImage().ForPlayer(Gamertag));
+                    await session.Query(new GetEmblemImage().ForPlayer(Gamertag));
 
                 // Grab gamers current avatar
                 var playerImgSpartanImage =
-                    await session.Query(new HaloSharp.Query.Profile.GetSpartanImage().ForPlayer(Gamertag));
+                    await session.Query(new GetSpartanImage().ForPlayer(Gamertag));
 
                 // Calculate total Kill / Death
-                float totalKillsDeath = (float) totalKills/(float) totalDeath;
+                float totalKillsDeath = totalKills/(float) totalDeath;
 
                 // Calculate total Kill+Assist / Death
-                float totalKillsWithAssistsDeath = ((float) totalKills + (float) totalAssists)/(float) totalDeath;
+                float totalKillsWithAssistsDeath = (totalKills + (float) totalAssists)/totalDeath;
 
                 // Calculate TotalShot Accuracy
-                float playersTotalAccuracy = 100*((float) totalShotsLanded/(float) totalShotsFired);
+                float playersTotalAccuracy = 100*(totalShotsLanded/(float) totalShotsFired);
 
-                TopMedals = warzoneServiceRecord.Results[0].Result.WarzoneStat.MedalAwards;
-                TopMedals.AddRange(arenaServiceRecord.Results[0].Result.ArenaStats.MedalAwards.ToList());
+                TopMedals = WarzoneServiceRecord.Results[0].Result.WarzoneStat.MedalAwards;
+                TopMedals.AddRange(ArenaServiceRecord.Results[0].Result.ArenaStats.MedalAwards.ToList());
                 TopMedals=TopMedals.OrderByDescending(o => o.Count).ToList();
 
 
@@ -191,7 +241,7 @@ namespace MaterialHaloSharp
                 UiUpdateLabel("Shot Accuracy: \t" + playersTotalAccuracy.ToString("0.00") + " %", l_totalShotsAccuracy);
                 Invoke((MethodInvoker)delegate {
                     circularProgressBar1.Caption = Resources.prefixSrWithSpace + "\n" + percentSpartanRankCurrent.ToString("0.00") + " %";
-                    circularProgressBar1.Value = Convert.ToInt32(percentSpartanRankCurrent);
+                    circularProgressBar1.Value = (float)(percentSpartanRankCurrent);
                 });
 
 
@@ -216,54 +266,54 @@ namespace MaterialHaloSharp
             var client = new HaloClient(DevAcc);
             using (var session = client.StartSession())
             {
-                var totalPlayTime = warzoneServiceRecord.Results[0].Result.WarzoneStat.TotalTimePlayed;
+                var totalPlayTime = WarzoneServiceRecord.Results[0].Result.WarzoneStat.TotalTimePlayed;
                 
                 // Parse the total played time to a custom string
                 var totalPlayTimeString = $"{totalPlayTime.Days}D {totalPlayTime.Hours}Hr {totalPlayTime.Minutes}Min";
 
                 // Calculate the "Warzone" total kills
-                var totalKills = warzoneServiceRecord.Results[0].Result.WarzoneStat.TotalKills;
+                var totalKills = WarzoneServiceRecord.Results[0].Result.WarzoneStat.TotalKills;
 
                 // Calculate the "Warzone" total deaths
-                var totalDeath = warzoneServiceRecord.Results[0].Result.WarzoneStat.TotalDeaths;
+                var totalDeath = WarzoneServiceRecord.Results[0].Result.WarzoneStat.TotalDeaths;
 
                 // Calculate the "Warzone" total assists
-                var totalAssists = warzoneServiceRecord.Results[0].Result.WarzoneStat.TotalAssists;
+                var totalAssists = WarzoneServiceRecord.Results[0].Result.WarzoneStat.TotalAssists;
 
                 // Calculate the "Warzone" total headshots
-                var totalHeadshots = warzoneServiceRecord.Results[0].Result.WarzoneStat.TotalHeadshots;
+                var totalHeadshots = WarzoneServiceRecord.Results[0].Result.WarzoneStat.TotalHeadshots;
 
                 // Calculate the "Warzone" total TotalShots
-                var totalShotsFired = warzoneServiceRecord.Results[0].Result.WarzoneStat.TotalShotsFired;
+                var totalShotsFired = WarzoneServiceRecord.Results[0].Result.WarzoneStat.TotalShotsFired;
 
                 // Calculate the "Warzone" total headshots
-                var totalShotsLanded = warzoneServiceRecord.Results[0].Result.WarzoneStat.TotalShotsLanded;
+                var totalShotsLanded = WarzoneServiceRecord.Results[0].Result.WarzoneStat.TotalShotsLanded;
 
                 // Calculate the "Warzone" total assassinations
-                var totalAssassinations = warzoneServiceRecord.Results[0].Result.WarzoneStat.TotalAssassinations;
+                var totalAssassinations = WarzoneServiceRecord.Results[0].Result.WarzoneStat.TotalAssassinations;
 
                 // Calculate the "Warzone" total game-counts
-                var totalGames = warzoneServiceRecord.Results[0].Result.WarzoneStat.TotalGamesCompleted;
+                var totalGames = WarzoneServiceRecord.Results[0].Result.WarzoneStat.TotalGamesCompleted;
 
                 // Calculate the "Warzone" total wins
-                var totalWon = warzoneServiceRecord.Results[0].Result.WarzoneStat.TotalGamesWon;
+                var totalWon = WarzoneServiceRecord.Results[0].Result.WarzoneStat.TotalGamesWon;
 
                 // Calculate the "Warzone" total losts
-                var totalLost = warzoneServiceRecord.Results[0].Result.WarzoneStat.TotalGamesLost;
+                var totalLost = WarzoneServiceRecord.Results[0].Result.WarzoneStat.TotalGamesLost;
 
                 // Calculate total Kill / Death
-                float totalKillsDeath = (float)totalKills / (float)totalDeath;
+                float totalKillsDeath = totalKills / (float)totalDeath;
 
                 // Calculate total Kill+Assist / Death
-                float totalKillsWithAssistsDeath = ((float)totalKills + (float)totalAssists) / (float)totalDeath;
+                float totalKillsWithAssistsDeath = (totalKills + (float)totalAssists) / totalDeath;
 
                 // Calculate TotalShot Accuracy
-                float playersTotalAccuracy = 100 * ((float)totalShotsLanded / (float)totalShotsFired);
+                float playersTotalAccuracy = 100 * (totalShotsLanded / (float)totalShotsFired);
 
-                TopMedals = warzoneServiceRecord.Results[0].Result.WarzoneStat.MedalAwards;
+                TopMedals = WarzoneServiceRecord.Results[0].Result.WarzoneStat.MedalAwards;
                 TopMedals = TopMedals.OrderByDescending(o => o.Count).ToList();
 
-                WarzoneTopWeapons = warzoneServiceRecord.Results[0].Result.WarzoneStat.WeaponStats;
+                WarzoneTopWeapons = WarzoneServiceRecord.Results[0].Result.WarzoneStat.WeaponStats;
                 WarzoneTopWeapons = WarzoneTopWeapons.OrderByDescending(o => o.TotalKills).ToList();
 
                 var MedalsSpriteImage = Tools.BitmapFromUrl(Tools.GetMedalFromMedalList(Medals, TopMedals[0].MedalId).SpriteLocation.SpriteSheetUri);
@@ -293,8 +343,6 @@ namespace MaterialHaloSharp
                         WarzoneTopWeaponsPicBoxes[max].Image = Tools.ScaleImage(WeaponImage, 64, 64);
                     });
                     UiUpdateLabel(WeaponName + "\n[ " + WeaponKills.ToString("#,###") + " ]", WarzoneTopWeaponsLabels[max]);
-
-
                 }
                 
             }

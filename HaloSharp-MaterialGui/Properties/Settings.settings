@@ -11,5 +11,11 @@
     <Setting Name="UpdateRateInSec" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">240</Value>
     </Setting>
+    <Setting Name="MetaDataLastUpdated" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)">2015-09-08</Value>
+    </Setting>
+    <Setting Name="Setting" Type="HaloSharp.Model.Metadata.Medal" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

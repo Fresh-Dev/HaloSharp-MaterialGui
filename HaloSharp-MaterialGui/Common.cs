@@ -48,7 +48,7 @@ namespace MaterialHaloSharp
         /// <summary>
         /// The HaloApi-Connector Settings
         /// </summary>
-        private readonly Product DevAcc = new Product { SubscriptionKey = Properties.Settings.Default.ApiKey, RateLimit = new RateLimit { RequestCount = 10, Timeout = Timeout.InfiniteTimeSpan, TimspSpan = new TimeSpan(0, 0, 0, 10) } };
+        private readonly Product DevAcc = new Product { SubscriptionKey = Properties.Settings.Default.ApiKey, RateLimit = new RateLimit { RequestCount = 10, Timeout = new TimeSpan(0,0,30), TimspSpan = new TimeSpan(0, 0, 0, 10) } };
 
         
 
@@ -208,32 +208,21 @@ namespace MaterialHaloSharp
         /// </summary>
         /// <param name="currentSpartanXp">The current spartan xp.</param>
         /// <returns>System.Double.</returns>
-        public double SpartanRankGetPercentage(int currentSpartanXp)
+        public double SpartanRankGetPercentage(int currentSpartanXp,int currentRank)
         {
-            int currentSpartanRank=0;
-            int[] nextSpartanRank = { 0 };
-            foreach (var sr in SpartanRanks.Where(
-                            sr => sr.StartXp > currentSpartanXp &&
-                            nextSpartanRank[0] == 0)
-                    )
-            {
-                nextSpartanRank[0] = sr.Id;
-                currentSpartanRank = sr.Id;
-            }
-            
-
-            var lastTargetXp = SpartanRanks[nextSpartanRank[0] - 1].StartXp;
-            var targetXp = SpartanRanks[nextSpartanRank[0]].StartXp;
-            var levelProgressTargetXp = targetXp - lastTargetXp;
+            int currentSpartanRank=currentRank;
+            var lastTargetXp = SpartanRanks[currentSpartanRank-1].StartXp;
+            var targetXp = SpartanRanks[currentSpartanRank].StartXp;
+            var levelProgressTargetXp = lastTargetXp- targetXp;
             var levelProgressXp = lastTargetXp - currentSpartanXp;
 
             
 
-            string output = "Current Rank: "+currentSpartanRank+"\n\tCurrentXP:\t"+currentSpartanXp+"\n\tLvL-Target-XP:\t"+lastTargetXp+"\n\t";
+            
+            MessageBox.Show(levelProgressXp.ToString()+" / "+levelProgressTargetXp.ToString()+"\n"+
+                (double)levelProgressXp / (double)levelProgressTargetXp);
 
-            MessageBox.Show(output);
-
-            double percentage = double.Parse(lastTargetXp.ToString()) / double.Parse(levelProgressXp.ToString());
+            double percentage = ((double)levelProgressXp / (double)levelProgressTargetXp)*100;
 
             return percentage;
         }

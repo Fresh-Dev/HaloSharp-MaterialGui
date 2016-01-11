@@ -88,5 +88,15 @@ namespace MaterialHaloSharp.Properties {
                 return ResourceManager.GetString("prefixTotalTimePlayedWithNewline", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Unbenannt_1 {
+            get {
+                object obj = ResourceManager.GetObject("Unbenannt_1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }
